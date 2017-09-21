@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\traits\TokenTrait;
 use common\models\User;
 use Yii;
 
@@ -16,7 +17,7 @@ use Yii;
  */
 class Token extends \yii\db\ActiveRecord
 {
-    const EXPIRE_TIME = 60*60*24*7 ;
+    const EXPIRE_TIME = 30;
     /**
      * @inheritdoc
      */
@@ -33,7 +34,7 @@ class Token extends \yii\db\ActiveRecord
     {
         return [
             [['expire_time', 'status'], 'integer'],
-            [['access_token', 'refresh_token'], 'string', 'max' => 255],
+            [['access_token'], 'string', 'max' => 255],
         ];
     }
 
@@ -54,9 +55,13 @@ class Token extends \yii\db\ActiveRecord
     public static function findUserByToken($token)
     {
         $token = Token::findOne(['access_token' => $token]);
-        if($token and $token->status == 1) {
+        if($token)
+            TokenTrait::checkExpireTime($token);
+        if($token->status == true ) {
             $user = User::findOne(['access_token' => $token->id]);
             return $user;
+        }else{
+            $token->delete();
         }
         return null;
     }

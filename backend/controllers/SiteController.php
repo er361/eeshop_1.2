@@ -22,7 +22,6 @@ use yii\web\UnauthorizedHttpException;
  */
 class SiteController extends Controller
 {
-    use TokenTrait;
     /**
      * @inheritdoc
      */
@@ -64,8 +63,8 @@ class SiteController extends Controller
         $user = User::findByUsername($authUser);
         if($user && $user->validatePassword($authPassword)){
             $token = new Token();
-            $token->access_token = $this->generateToken($request->authUser,$request->userIP);
-            $token->expire_time = Token::EXPIRE_TIME;
+            $token->access_token = Yii::$app->security->generateRandomString();
+            $token->expire_time = time() + Token::EXPIRE_TIME;
             if($token->save()){
                 $user->access_token = $token->id;
                 if($user->save())
@@ -74,7 +73,7 @@ class SiteController extends Controller
                     $response->setStatusCode(500);
             }else
                 $response->setStatusCode(500);
-        } else {
+        }else {
             $response->setStatusCode(401);
             $response->data = [
                 'message' => 'Login required',

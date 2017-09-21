@@ -7,7 +7,7 @@
  */
 
 namespace backend\traits;
-
+/* @var $token Token */
 
 trait TokenTrait
 {
@@ -18,4 +18,12 @@ trait TokenTrait
 
         return $token;
     }
+
+    public static function checkExpireTime($token)
+    {
+        if(time() > $token->expire_time){
+            $token->status = false;
+        }
+    }
 }
+use backend\models\Token;
