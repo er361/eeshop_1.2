@@ -68,9 +68,9 @@ class SiteController extends Controller
             $token->expire_time = Token::EXPIRE_TIME;
             if($token->save()){
                 $user->access_token = $token->id;
-                if($user->save()){
+                if($user->save())
                     $response->data = $token->toArray(['access_token','expire_time']);
-                }else
+                else
                     $response->setStatusCode(500);
             }else
                 $response->setStatusCode(500);
