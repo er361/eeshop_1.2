@@ -21,14 +21,7 @@ class ProductController extends ActiveController
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::className(),
-            'auth' => function ($username, $password) {
-                $user = User::find()->where(['username' => $username])->one();
-                if ($user->validatePassword($password)) {
-                    return $user;
-                }
-                return null;
-            },
+            'class' => HttpBasicAuth::className()
         ];
         return $behaviors;
     }

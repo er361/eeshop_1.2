@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -23,6 +24,7 @@ class Token extends \yii\db\ActiveRecord
     {
         return 'token';
     }
+
 
     /**
      * @inheritdoc
@@ -47,5 +49,15 @@ class Token extends \yii\db\ActiveRecord
             'refresh_token' => 'Refresh Token',
             'status' => 'Status',
         ];
+    }
+
+    public static function findUserByToken($token)
+    {
+        $token = Token::findOne(['access_token' => $token]);
+        if($token and $token->status == 1) {
+            $user = User::findOne(['access_token' => $token->id]);
+            return $user;
+        }
+        return null;
     }
 }

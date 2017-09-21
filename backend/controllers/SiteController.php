@@ -1,7 +1,11 @@
 <?php
 namespace backend\controllers;
 
+
+
+
 use backend\models\Token;
+use backend\traits\TokenTrait;
 use common\models\User;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
@@ -18,6 +22,7 @@ use yii\web\UnauthorizedHttpException;
  */
 class SiteController extends Controller
 {
+    use TokenTrait;
     /**
      * @inheritdoc
      */
@@ -51,6 +56,7 @@ class SiteController extends Controller
     {
         $request = Yii::$app->request;
         $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
 
         $authPassword = $request->authPassword;
         $authUser = $request->authUser;
@@ -58,24 +64,18 @@ class SiteController extends Controller
         $user = User::findByUsername($authUser);
         if($user && $user->validatePassword($authPassword)){
             $token = new Token();
-            $token->access_token = Yii::$app->security->generateRandomString();
+            $token->access_token = $this->generateToken($request->authUser,$request->userIP);
             $token->expire_time = Token::EXPIRE_TIME;
-            $token->refresh_token = Yii::$app->security->generateRandomString();
-
             if($token->save()){
-                $user->access_token = $token->primaryKey;
-
+                $user->access_token = $token->id;
                 if($user->save()){
-                    $response->format = Response::FORMAT_JSON;
-                    // serialize model to json
-                    $response->data = $token->toArray(['access_token','expire_time','refresh_token']);
+                    $response->data = $token->toArray(['access_token','expire_time']);
                 }else
                     $response->setStatusCode(500);
             }else
                 $response->setStatusCode(500);
         } else {
             $response->setStatusCode(401);
-            $response->format = Response::FORMAT_JSON;
             $response->data = [
                 'message' => 'Login required',
                 'code' => 401
