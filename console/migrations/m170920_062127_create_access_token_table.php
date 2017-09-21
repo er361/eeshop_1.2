@@ -14,6 +14,9 @@ class m170920_062127_create_access_token_table extends Migration
     {
         $this->createTable('token', [
             'id' => $this->primaryKey(),
+            'access_token' => $this->string(),
+            'expire_time' => $this->integer(),
+            'refresh_token' => $this->string(),
         ]);
     }
 
@@ -22,6 +25,6 @@ class m170920_062127_create_access_token_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('access_token');
+        $this->dropTable('token');
     }
 }
