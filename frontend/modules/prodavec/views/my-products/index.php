@@ -1,6 +1,7 @@
 <?
 
 use frontend\modules\prodavec\models\Category;
+use yii\web\View;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 
@@ -10,8 +11,10 @@ $dataProvider = new ActiveDataProvider([
         'pageSize' => 20,
     ],
 ]);
-echo ListView::widget([
-    'dataProvider' => $dataProvider,
-    'itemView' => '_category',
-]);
+
+    echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_category',
+    ]);
 ?>
+

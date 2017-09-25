@@ -20,7 +20,9 @@ use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 ?>
-<? Modal::begin(['header' => $model->name,
+<? Modal::begin([
+    'id' => 'modal_'.$model->id,
+    'header' => $model->name,
     'toggleButton' => ['label' => $model->name,'tag' => 'a','class' => 'btn']]);
 
 $query = Subcategory::find()->where(['category_id' => $model->id]);
@@ -32,10 +34,11 @@ $query = Subcategory::find()->where(['category_id' => $model->id]);
         ]
     ]);
 
-echo ListView::widget([
-    'dataProvider' => $dataProvider,
-    'itemView' => '_subcat',
-]);
+    echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_subcat',
+        'viewParams' => ['category_id' => $model->id]
+    ]);
 
 Modal::end();?>
 

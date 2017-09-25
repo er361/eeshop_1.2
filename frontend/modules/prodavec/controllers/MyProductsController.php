@@ -11,4 +11,12 @@ class MyProductsController extends \yii\web\Controller
 
         return $this->render('index');
     }
+
+    public function actionProducts()
+    {
+        if(\Yii::$app->request->isPjax)
+            return $this->renderAjax('product');
+
+        return $this->render('product');
+    }
 }
