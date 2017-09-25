@@ -33,20 +33,20 @@ AppAsset::register($this);
     <div class="container-fluid">
         <div class="grid">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <ul>
                         <li><a href="<?= Url::to(['personal-info/index'])?>">Личные данные</a></li>
                         <li><a href="<?= Url::to(['my-products/index'])?>">Мои товары</a></li>
                     </ul>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <? $userProfile = ProdavecPersonalInfo::findOne(['user_id' => \Yii::$app->getUser()->id]) ;?>
                     <?= $this->render('_account-block',['userProfile' => $userProfile])?>
                 </div>
 
 
-                <div id="pjax-container" class="col-md-6">
+                <div id="pjax-container" class="col-md-8">
                     <?= $content?>
                 </div>
 

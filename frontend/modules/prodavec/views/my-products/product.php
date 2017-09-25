@@ -7,8 +7,14 @@
  * @var $this yii\web\View
  */
 
-use yii\web\View;
+use yii\grid\GridView;
+
 
 ?>
-<h1>my products</h1>
+<div style="width: 800px;overflow-x: auto">
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider
+    ])?>
+</div>
+
 
