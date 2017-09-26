@@ -1,1 +1,1 @@
-$(document).pjax('a', '#pjax-container');
+$(document).pjax('a.pjax', '#pjax-container');

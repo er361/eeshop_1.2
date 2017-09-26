@@ -3,6 +3,7 @@
 namespace frontend\modules\prodavec\controllers;
 
 
+use frontend\modules\prodavec\models\ProductSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -22,15 +23,12 @@ class MyProductsController extends Controller
 
     public function actionProducts($id)
     {
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         if(\Yii::$app->request->isPjax)
-            return $this->renderAjax('product');
+            return $this->renderAjax('product',['dataProvider' => $dataProvider,'searchModel' => $searchModel]);
 
-        $query = Product::find()->where(['subcategory_id' => $id,'prodavec_id' => Yii::$app->user->id]);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query
-        ]);
-
-        return $this->render('product',['dataProvider' => $dataProvider]);
+        return $this->render('product',['dataProvider' => $dataProvider,'searchModel' => $searchModel]);
     }
 }

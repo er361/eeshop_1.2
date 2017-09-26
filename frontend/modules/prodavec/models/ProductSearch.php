@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace frontend\modules\prodavec\models;
 
 use Yii;
 
@@ -20,15 +20,11 @@ use Yii;
  * @property integer $vitrina_status
  * @property integer $amount
  */
-class Product extends \yii\db\ActiveRecord
+use common\models\Product;
+use yii\data\ActiveDataProvider;
+
+class ProductSearch extends Product
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'product';
-    }
 
     /**
      * @inheritdoc
@@ -36,9 +32,12 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'vendor_code', 'size', 'prodavec_id', 'subcategory_id', 'price', 'price_on_website', 'vitrina_status', 'amount'], 'integer'],
-            [['title', 'brand_name', 'color'], 'string', 'max' => 50],
+            [['title'], 'safe']
         ];
+    }
+    public function scenarios()
+    {
+        return yii\base\Model::scenarios();
     }
 
     /**
@@ -60,5 +59,26 @@ class Product extends \yii\db\ActiveRecord
             'vitrina_status' => 'Vitrina Status',
             'amount' => 'Amount',
         ];
+    }
+
+    public function search($params)
+    {
+        $query = Product::find()->where(['subcategory_id' => $params['id'],'prodavec_id' => Yii::$app->user->id]);
+
+        $dataProvider = new ActiveDataProvider([
+           'query' => $query
+        ]);
+
+        // load the search form data and validate
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        // adjust the query by adding the filters
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like','vendor_code', $this->vendor_code])
+            ->andFilterWhere(['like','brand_name', $this->brand_name]);
+
+        return $dataProvider;
     }
 }

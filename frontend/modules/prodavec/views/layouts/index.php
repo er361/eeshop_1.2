@@ -35,8 +35,8 @@ AppAsset::register($this);
             <div class="row">
                 <div class="col-md-2">
                     <ul>
-                        <li><a href="<?= Url::to(['personal-info/index'])?>">Личные данные</a></li>
-                        <li><a href="<?= Url::to(['my-products/index'])?>">Мои товары</a></li>
+                        <li><a class="pjax" href="<?= Url::to(['personal-info/index'])?>">Личные данные</a></li>
+                        <li><a class="pjax" href="<?= Url::to(['my-products/index'])?>">Мои товары</a></li>
                     </ul>
                 </div>
 
@@ -46,7 +46,7 @@ AppAsset::register($this);
                 </div>
 
 
-                <div id="pjax-container" class="col-md-8">
+                <div id="pjax-container" style="overflow: auto" class="col-md-8">
                     <?= $content?>
                 </div>
 

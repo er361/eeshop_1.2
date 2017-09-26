@@ -8,13 +8,16 @@
  */
 
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 
 ?>
 <div style="width: 800px;overflow-x: auto">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider
-    ])?>
+    <? Pjax::begin()?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel
+        ])?>
+    <? Pjax::end()?>
 </div>
 
 
