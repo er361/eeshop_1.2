@@ -21,14 +21,18 @@ class MyProductsController extends Controller
     }
 
 
-    public function actionProducts($id)
+    public function actionProducts()
     {
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $id = Yii::$app->request->queryParams['id'];
         if(\Yii::$app->request->isPjax)
-            return $this->renderAjax('product',['dataProvider' => $dataProvider,'searchModel' => $searchModel]);
+            return $this->renderAjax('product',['dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+                'id' => $id]);
 
-        return $this->render('product',['dataProvider' => $dataProvider,'searchModel' => $searchModel]);
+        return $this->render('product',['dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'id' => $id]);
     }
 }

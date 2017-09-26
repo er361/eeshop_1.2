@@ -32,7 +32,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['title'], 'safe']
+            [['title','vendor_code','brand_name'], 'safe']
         ];
     }
     public function scenarios()

@@ -10,6 +10,7 @@ use yii\helpers\Url;
         <?= Html::encode($model->name)?>
     </a>
 </div>
+
 <script>
     function hideModal(id){
         $('#modal_' + id).modal('hide');
