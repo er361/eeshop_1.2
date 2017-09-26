@@ -12,13 +12,17 @@ use yii\widgets\Pjax;
 
 ?>
 <div style="width: 800px;overflow-x: auto">
-    <?= $this->render('_search', ['model' => $searchModel,'id' => $id]) ?>
     <? Pjax::begin()?>
+        <?= $this->render('_search', ['model' => $searchModel,'id' => $id]) ?>
+
+
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel
         ])?>
+
     <? Pjax::end()?>
+
 </div>
 
 

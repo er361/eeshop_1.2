@@ -32,7 +32,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['title','vendor_code','brand_name'], 'safe']
+            [['title','vendor_code','brand_name','color'], 'safe']
         ];
     }
     public function scenarios()
@@ -43,23 +43,6 @@ class ProductSearch extends Product
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'brand_name' => 'Brand Name',
-            'vendor_code' => 'Vendor Code',
-            'size' => 'Size',
-            'color' => 'Color',
-            'prodavec_id' => 'Prodavec ID',
-            'subcategory_id' => 'Subcategory ID',
-            'price' => 'Price',
-            'price_on_website' => 'Price On Website',
-            'vitrina_status' => 'Vitrina Status',
-            'amount' => 'Amount',
-        ];
-    }
 
     public function search($params)
     {
@@ -77,7 +60,8 @@ class ProductSearch extends Product
         // adjust the query by adding the filters
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like','vendor_code', $this->vendor_code])
-            ->andFilterWhere(['like','brand_name', $this->brand_name]);
+            ->andFilterWhere(['like','brand_name', $this->brand_name])
+            ->andFilterCompare('color',$this->color);
 
         return $dataProvider;
     }
