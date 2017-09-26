@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use Yii\db\Query;
 
 /**
  * This is the model class for table "product".
@@ -61,4 +62,18 @@ class Product extends \yii\db\ActiveRecord
             'amount' => 'Amount',
         ];
     }
+
+    public static function getDropDownData($columnName)
+    {
+        $query = new Query();
+
+        $query->distinct()->select([$columnName])->from('product');
+        $query->params = [':columnName' => $columnName];
+
+        $column = $query->column();
+        $data = array_combine($column,$column);
+
+        return $data;
+    }
+
 }

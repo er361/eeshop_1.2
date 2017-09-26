@@ -25,6 +25,8 @@ use yii\data\ActiveDataProvider;
 
 class ProductSearch extends Product
 {
+    public $priceFrom;
+    public $priceTo;
 
     /**
      * @inheritdoc
@@ -32,7 +34,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['title','vendor_code','brand_name','color'], 'safe']
+            [['title','vendor_code','brand_name','color','priceFrom','priceTo'], 'safe']
         ];
     }
     public function scenarios()
@@ -60,8 +62,10 @@ class ProductSearch extends Product
         // adjust the query by adding the filters
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like','vendor_code', $this->vendor_code])
-            ->andFilterWhere(['like','brand_name', $this->brand_name])
-            ->andFilterCompare('color',$this->color);
+            ->andFilterCompare('brand_name', $this->brand_name)
+            ->andFilterCompare('color',$this->color)
+            ->andFilterWhere(['>=','price',$this->priceFrom])
+            ->andFilterWhere(['<=','price',$this->priceTo]);
 
         return $dataProvider;
     }

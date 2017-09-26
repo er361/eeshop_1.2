@@ -6,6 +6,7 @@
  * Time: 11:56
  */
 
+use common\models\Product;
 use yii\helpers\BaseArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -28,11 +29,17 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title') ?>
     <?= $form->field($model, 'brand_name') ?>
     <?= $form->field($model, 'vendor_code') ?>
-    <? $colors = Yii::$app->db->createCommand('select distinct color from product')->queryColumn();
-    $data = array_combine($colors, $colors);
-    ?>
-    <?= $form->field($model,'color')->dropDownList($data,['prompt' => 'Выберите цвет'])?>
 
+    <?= $form->field($model,'color')
+        ->dropDownList(Product::getDropDownData('color'),
+            ['prompt' => 'Выберите цвет'])?>
+
+    <?= $form->field($model,'brand_name')
+        ->dropDownList(Product::getDropDownData('brand_name'),
+            ['prompt' => 'Выберите бренд'])?>
+
+    <?= $form->field($model,'priceFrom')?>
+    <?= $form->field($model,'priceTo')?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
