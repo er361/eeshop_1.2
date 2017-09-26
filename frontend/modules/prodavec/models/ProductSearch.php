@@ -27,7 +27,7 @@ class ProductSearch extends Product
 {
     public $priceFrom;
     public $priceTo;
-
+    public $category;
     /**
      * @inheritdoc
      */
@@ -62,8 +62,12 @@ class ProductSearch extends Product
         // adjust the query by adding the filters
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like','vendor_code', $this->vendor_code])
+
+            //быстрее работает чем лайк)
             ->andFilterCompare('brand_name', $this->brand_name)
             ->andFilterCompare('color',$this->color)
+
+            //заебашил как боженька
             ->andFilterWhere(['>=','price',$this->priceFrom])
             ->andFilterWhere(['<=','price',$this->priceTo]);
 

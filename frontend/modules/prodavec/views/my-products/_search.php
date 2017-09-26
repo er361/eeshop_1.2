@@ -7,6 +7,8 @@
  */
 
 use common\models\Product;
+use frontend\modules\prodavec\models\Category;
+use frontend\modules\prodavec\models\Subcategory;
 use yii\helpers\BaseArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -40,6 +42,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model,'priceFrom')?>
     <?= $form->field($model,'priceTo')?>
+
+    <?= $form->field($model,'category')
+        ->dropDownList(BaseArrayHelper::map(Category::find()->all(),'id','name'),
+            ['prompt' => 'Выберите категорию'])?>
+
+    <?= $form->field($model,'subcategory_id')
+        ->dropDownList(BaseArrayHelper::map(Subcategory::find()->all(),'id','name'),
+            ['prompt' => 'Выберите под категорию'])
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
