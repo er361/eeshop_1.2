@@ -36,7 +36,7 @@ $query = Subcategory::find()->where(['category_id' => $model->id]);
 
     echo ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView' => '_subcat',
+        'itemView' => 'index-subcat',
         'viewParams' => ['category_id' => $model->id]
     ]);
 

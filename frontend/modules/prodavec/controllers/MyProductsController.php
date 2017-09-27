@@ -7,6 +7,7 @@ use frontend\modules\prodavec\models\ProductSearch;
 use frontend\modules\prodavec\models\Subcategory;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 use common\models\Product;
@@ -26,20 +27,35 @@ class MyProductsController extends Controller
     {
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $id = Yii::$app->request->queryParams['id'];
-        if(\Yii::$app->request->isPjax)
-            return $this->renderAjax('product',['dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
-                'id' => $id]);
 
-        return $this->render('product',['dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'id' => $id]);
+        if(\Yii::$app->request->isPjax)
+            return $this->renderAjax('index-product',['dataProvider' => $dataProvider,
+                'searchModel' => $searchModel]);
+
+        return $this->render('index-product',['dataProvider' => $dataProvider,
+            'searchModel' => $searchModel]);
     }
 
     public function actionSubCat($category_id)
     {
         $subCats = Subcategory::find()->where(['category_id' => $category_id])->all();
         return $this->renderAjax('_subCatDropDown',['subCats' => $subCats]);
+    }
+
+    public function actionProductGrid()
+    {
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if(Yii::$app->request->isPjax)
+            return $this->renderAjax('_product-grid',[
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider
+            ]);
+
+            return $this->redirect(['products',
+                'id' => ArrayHelper::getValue(Yii::$app->request->queryParams,'ProductSearch.subcategory_id')
+            ]);
+
     }
 }

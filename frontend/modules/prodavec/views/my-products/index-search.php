@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 <div class="product-search">
     <?php $form = ActiveForm::begin([
             'id' => 'product_form',
-        'action' => ['products?id='.$id],
+        'action' => ['product-grid'],
         'method' => 'get',
         'options' => ['data' =>
             ['pjax' => true]
