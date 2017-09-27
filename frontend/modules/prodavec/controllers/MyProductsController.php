@@ -4,6 +4,7 @@ namespace frontend\modules\prodavec\controllers;
 
 
 use frontend\modules\prodavec\models\ProductSearch;
+use frontend\modules\prodavec\models\Subcategory;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -34,5 +35,11 @@ class MyProductsController extends Controller
         return $this->render('product',['dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'id' => $id]);
+    }
+
+    public function actionSubCat($category_id)
+    {
+        $subCats = Subcategory::find()->where(['category_id' => $category_id])->all();
+        return $this->renderAjax('_subCatDropDown',['subCats' => $subCats]);
     }
 }
