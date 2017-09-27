@@ -12,6 +12,7 @@ use frontend\assets\AppAsset;
 use frontend\modules\prodavec\models\ProdavecPersonalInfo;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 AppAsset::register($this);
 
@@ -35,8 +36,16 @@ AppAsset::register($this);
             <div class="row">
                 <div class="col-md-2">
                     <ul>
-                        <li><a class="pjax" href="<?= Url::to(['personal-info/index'])?>">Личные данные</a></li>
-                        <li><a class="pjax" href="<?= Url::to(['my-products/index'])?>">Мои товары</a></li>
+                        <? Pjax::begin([
+                                'clientOptions' => [
+                                        'container' => '#pjax-container',
+                                    'timeout' => 5000
+                                ]
+                        ])?>
+                            <li><a class="pjax" href="<?= Url::to(['personal-info/index'])?>">Личные данные</a></li>
+                            <li><a class="pjax" href="<?= Url::to(['my-products/index'])?>">Мои товары</a></li>
+                        <? Pjax::end()?>
+
                     </ul>
                 </div>
 
@@ -45,15 +54,13 @@ AppAsset::register($this);
                     <?= $this->render('_account-block',['userProfile' => $userProfile])?>
                 </div>
 
-
                 <div id="pjax-container" style="overflow: auto" class="col-md-8">
-                    <?= $content?>
+                    <?= $content ?>
                 </div>
 
             </div>
         </div>
     </div>
-    <? $this->registerJsFile('@web/js/ajaxRender.js',['depends' => 'frontend\assets\BowerAsset'],'mAjaxRender');?>
     <?php $this->endBody() ?>
     </body>
     </html>

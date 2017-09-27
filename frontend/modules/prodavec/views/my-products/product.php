@@ -20,9 +20,9 @@ use yii\widgets\Pjax;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel
         ])?>
-
     <? Pjax::end()?>
 
 </div>
+
 
 

@@ -59,6 +59,3 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 </div>
 
-<? $this->registerJsFile('@web/js/categoryPjax.js',[
-        'depends' => yii\web\JqueryAsset::className()
-])?>

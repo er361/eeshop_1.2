@@ -34,7 +34,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['title','vendor_code','brand_name','color','priceFrom','priceTo'], 'safe']
+            [['title','vendor_code','brand_name','color','priceFrom','priceTo','subcategory_id'], 'safe']
         ];
     }
     public function scenarios()
@@ -48,7 +48,13 @@ class ProductSearch extends Product
 
     public function search($params)
     {
-        $query = Product::find()->where(['subcategory_id' => $params['id'],'prodavec_id' => Yii::$app->user->id]);
+        $formSubCat = yii\helpers\ArrayHelper::getValue($params, 'ProductSearch.subcategory_id');
+        $subcategory_id = $formSubCat ? $formSubCat : $params['id'];
+
+        $query = Product::find()->where([
+            'subcategory_id' => $subcategory_id,
+            'prodavec_id' => Yii::$app->user->id
+        ]);
 
         $dataProvider = new ActiveDataProvider([
            'query' => $query
@@ -70,6 +76,7 @@ class ProductSearch extends Product
             //заебашил как боженька
             ->andFilterWhere(['>=','price',$this->priceFrom])
             ->andFilterWhere(['<=','price',$this->priceTo]);
+
 
         return $dataProvider;
     }

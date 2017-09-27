@@ -13,7 +13,7 @@ use yii\helpers\BaseArrayHelper;
 <div id="subcat-ajax">
     <? if($subCats):?>
         <?= BaseHtml::label('Subcategory','productsearch-subcategory')?>
-        <?= BaseHtml::dropDownList('productsearch-subcategory',[],
+        <?= BaseHtml::dropDownList('ProductSearch[subcategory_id]',[],
             BaseArrayHelper::map($subCats,'id','name'),
             [
                     'prompt' => 'Выберите под категорию',
@@ -22,3 +22,10 @@ use yii\helpers\BaseArrayHelper;
         <div class="help-block"></div>
     <?endif;?>
 </div>
+
+<? $this->registerJsFile('@web/js/categoryPjax.js',[
+    'depends' => yii\web\JqueryAsset::className()
+])?>
+
+
+

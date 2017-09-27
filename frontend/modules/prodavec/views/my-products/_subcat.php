@@ -11,10 +11,4 @@ use yii\helpers\Url;
     </a>
 </div>
 
-<script>
-    function hideModal(id){
-        $('#modal_' + id).modal('hide');
-        $('.modal-backdrop.fade.in').hide();
-        $('body.modal-open').removeClass('modal-open');
-    }
-</script>
+
