@@ -17,7 +17,7 @@ use Yii;
  */
 class Token extends \yii\db\ActiveRecord
 {
-    const EXPIRE_TIME = 30;
+    const EXPIRE_TIME = 60*60*7*24;
     /**
      * @inheritdoc
      */
@@ -55,13 +55,14 @@ class Token extends \yii\db\ActiveRecord
     public static function findUserByToken($token)
     {
         $token = Token::findOne(['access_token' => $token]);
-        if($token)
+        if($token){
             TokenTrait::checkExpireTime($token);
-        if($token->status == true ) {
-            $user = User::findOne(['access_token' => $token->id]);
-            return $user;
-        }else{
-            $token->delete();
+            if($token->status == true ) {
+                $user = User::findOne(['access_token' => $token->id]);
+                return $user;
+            }else{
+                $token->delete();
+            }
         }
         return null;
     }

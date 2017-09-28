@@ -18,26 +18,18 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'except' => ['login'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'registration' => ['post']
                 ],
             ],
         ];
@@ -142,20 +134,26 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionSignup()
+    public function actionRegistration()
     {
+        $response = Yii::$app->response;
+        $response->format = yii\web\Response::FORMAT_JSON;
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+                $response->data = $model->toArray(['username', 'password', 'email']);
+                return $response->send();
+            } else {
+                $response->data = $model->getErrors();
+                return $response->send();
             }
         }
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        $response->data = [
+            'error' => 'Пустые поля или не правильного формата',
+            'format' => 'SignupForm[fieldName]'
+        ];
     }
 
     /**
