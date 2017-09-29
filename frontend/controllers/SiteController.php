@@ -141,13 +141,12 @@ class SiteController extends Controller
 
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
+            if ($user = $model->signup())
                 $response->data = $model->toArray(['username', 'password', 'email']);
-                return $response->send();
-            } else {
+            else
                 $response->data = $model->getErrors();
-                return $response->send();
-            }
+
+            $response->send();
         }
 
         $response->data = [

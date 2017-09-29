@@ -21,7 +21,8 @@ return [
             'csrfParam' => '_csrf-backend',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
-            ]
+            ],
+            'baseUrl' => '/api'
         ],
         'user' => [
             'identityClass' => 'common\models\User',
