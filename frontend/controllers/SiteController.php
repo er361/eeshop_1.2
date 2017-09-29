@@ -141,12 +141,25 @@ class SiteController extends Controller
 
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup())
-                $response->data = $model->toArray(['username', 'password', 'email']);
-            else
+
+            if ($user = $model->signup()){
+                $manager = Yii::$app->authManager;
+                $role = Yii::$app->request->headers['role'];
+
+                if($role == 'seller' or $role == 'courier' or $role == 'buyer'){
+                    $lRole = $manager->getRole($role);
+                    if($lRole)
+                        $manager->assign($lRole,$user->getId());
+                }
+                $modelArr = $model->toArray(['username', 'password', 'email']);
+                $modelArr['role'] =$lRole ? $lRole->name : null;
+
+                $response->data = $modelArr;
+            } else
                 $response->data = $model->getErrors();
 
             $response->send();
+            return;
         }
 
         $response->data = [

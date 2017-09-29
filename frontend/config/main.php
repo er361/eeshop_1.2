@@ -48,6 +48,10 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'pattern' => 'reg',
+                    'route' => 'site/registration'
+                ]
             ],
         ],
     ],

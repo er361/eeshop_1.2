@@ -13,7 +13,9 @@ use Yii;
 use yii\console\Controller;
 
 class RbacController extends Controller {
-    function actionInit(){
+
+    function actionInit()
+    {
 
         $auth = Yii::$app->authManager;
         $auth->removeAll();
@@ -23,9 +25,14 @@ class RbacController extends Controller {
     {
         $auth = Yii::$app->authManager;
 
-        $lRole =  $auth->createRole($role);
-        $auth->add($lRole);
+        if($auth->getRole($role))
+            $auth->assign($role, User::findByUsername($username)->getId());
+    }
 
-        $auth->assign($lRole,User::findByUsername($username)->getId());
+    function actionAddRole($role)
+    {
+        $manager = Yii::$app->authManager;
+        $role1 = $manager->createRole($role);
+        $manager->add($role1);
     }
 }
