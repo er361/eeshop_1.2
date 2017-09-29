@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\traits\MCrypt;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -18,6 +19,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    use  MCrypt;
     public $enableCsrfValidation = false;
     /**
      * @inheritdoc
@@ -126,7 +128,14 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        $str = '{
+            "username": "apiTest",
+            "password": "rainboxe361",
+            "email" : "api@test.kz"
+            "key": "a0259fe2fa786df53b041dbdbf87cb9d"
+        }';
+
+        echo  $this->crypt($str,'e');
     }
 
     /**
@@ -139,8 +148,21 @@ class SiteController extends Controller
         $response = Yii::$app->response;
         $response->format = yii\web\Response::FORMAT_JSON;
 
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
+        //raw json data parse
+        $rawBody = Yii::$app->request->rawBody;
+        $bodyObj = json_decode($rawBody);
+
+        $payloadObj = $this->crypt($bodyObj->payload,'d');
+
+        if(MCrypt::compareKey($payloadObj->key)){
+            $model = new SignupForm();
+            $model->username = $payloadObj->username;
+            $model->password = $payloadObj->password;
+            $model->email = $payloadObj->email;
+        }
+
+
+        if ($model->load($payloadObj)) {
 
             if ($user = $model->signup()){
                 $manager = Yii::$app->authManager;
