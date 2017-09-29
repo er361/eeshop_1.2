@@ -151,7 +151,7 @@ class SiteController extends Controller
         }
 
         $response->data = [
-            'error' => 'empty fields or wrong format',
+            'error' => 'empty fields orf wrong format',
             'format' => 'SignupForm[fieldName]'
         ];
     }
