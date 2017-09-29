@@ -151,7 +151,7 @@ class SiteController extends Controller
         }
 
         $response->data = [
-            'error' => 'Пустые поля или не правильного формата',
+            'error' => 'empty fields or wrong format',
             'format' => 'SignupForm[fieldName]'
         ];
     }
