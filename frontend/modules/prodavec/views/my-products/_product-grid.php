@@ -8,10 +8,30 @@
 
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+/* @var $this yii\web\View */
 
-
- echo GridView::widget([
+echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel
+    'filterModel' => $searchModel,
+    'columns' => [
+        [
+            'label' => '№',
+            'format' => 'html',
+            'value' => function($model,$key,$index){
+                    return  '<b>'.$index.'</b>';
+            }
+        ],
+        [
+          'attribute' => 'title',
+          'format' => 'html',
+          'value' => function($model){
+             return $this->render('_product_grid_view',['model' => $model]);
+          }
+        ],
+        'price',
+        'price_on_website',
+        'amount',
+        'vitrina_status'
+    ]
 ])?>
 

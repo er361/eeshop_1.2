@@ -25,7 +25,7 @@ use yii\widgets\Pjax;
         <div id="product-grid">
             <?= $this->render('_product-grid',[
                 'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel
+                'filterModel' => $searchModel,
             ])?>
         </div>
     <? Pjax::end()?>

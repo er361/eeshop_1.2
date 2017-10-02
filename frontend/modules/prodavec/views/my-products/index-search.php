@@ -27,28 +27,55 @@ use yii\widgets\ActiveForm;
             ['pjax' => true]
         ]
     ]); ?>
+<div class="grid">
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'title') ?>
+            <?= $form->field($model, 'brand_name') ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'vendor_code') ?>
+            <?= $form->field($model,'color')
+                ->dropDownList(Product::getDropDownData('color'),
+                    ['prompt' => 'Выберите цвет'])?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model,'brand_name')
+                ->dropDownList(Product::getDropDownData('brand_name'),
+                    ['prompt' => 'Выберите бренд'])?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'title') ?>
-    <?= $form->field($model, 'brand_name') ?>
-    <?= $form->field($model, 'vendor_code') ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model,'category')
+                ->dropDownList(BaseArrayHelper::map(Category::find()->all(),'id','name'),
+                    ['prompt' => 'Выберите категорию'])?>
+            <?= $this->render('_subCatDropDown')?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model,'priceTo')?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model,'priceFrom')?>
+        </div>
+    </div>
+</div>
 
-    <?= $form->field($model,'color')
-        ->dropDownList(Product::getDropDownData('color'),
-            ['prompt' => 'Выберите цвет'])?>
-
-    <?= $form->field($model,'brand_name')
-        ->dropDownList(Product::getDropDownData('brand_name'),
-            ['prompt' => 'Выберите бренд'])?>
-
-    <?= $form->field($model,'priceFrom')?>
-    <?= $form->field($model,'priceTo')?>
 
 
-        <?= $form->field($model,'category')
-            ->dropDownList(BaseArrayHelper::map(Category::find()->all(),'id','name'),
-                ['prompt' => 'Выберите категорию'])?>
 
-    <?= $this->render('_subCatDropDown')?>
+
+
+
+
+
+
+
+
+
+
+
 
 
     <div class="form-group">

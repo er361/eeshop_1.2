@@ -152,8 +152,9 @@ class SiteController extends Controller
                 "role" => "seller"
             ]
         ];
+
         $user = User::findByUsername('apiTest');
-        $token = Token::findOne(['id' => $user->access_token]);
+        $token = 'Tg7o8p8lFXcNWYj3SfVmdtH45uIn7O0Q';
 
         $authStr = [
           'username' => 'apiTest',
@@ -173,7 +174,7 @@ class SiteController extends Controller
 
         echo '<br/>';
         echo  'token';
-        echo Html::textarea('token',$this->crypt($token->access_token,'e'),['rows' => 5,'cols' => 100]);
+        echo Html::textarea('token',$this->crypt($token,'e'),['rows' => 5,'cols' => 100]);
     }
 
     /**
