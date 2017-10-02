@@ -1,9 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use backend\models\Token;
 use common\traits\MCrypt;
 use Yii;
 use yii\base\InvalidParamException;
+use Yii\helpers\BaseArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -128,14 +130,18 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        $str = '{
-            "username": "apiTest",
-            "password": "rainboxe361",
-            "email" : "api@test.kz"
-            "key": "a0259fe2fa786df53b041dbdbf87cb9d"
-        }';
+        $str = [
+            "SignupForm" => [
+                "username" => "apiTest",
+                "password" => "rainboxe361",
+                "email" => "api@test.kz",
+                "key" => "a0259fe2fa786df53b041dbdbf87cb9d",
+                "role" => "seller"
+            ]
+        ];
 
-        echo  $this->crypt($str,'e');
+        $json = json_encode($str);
+        echo  $this->crypt($json,'e');
     }
 
     /**
@@ -152,29 +158,25 @@ class SiteController extends Controller
         $rawBody = Yii::$app->request->rawBody;
         $bodyObj = json_decode($rawBody);
 
-        $payloadObj = $this->crypt($bodyObj->payload,'d');
+        $payload = json_decode($this->crypt($bodyObj->payload, 'd'), true);
+        $signUpForm = BaseArrayHelper::getValue($payload,'SignupForm');
 
-        if(MCrypt::compareKey($payloadObj->key)){
-            $model = new SignupForm();
-            $model->username = $payloadObj->username;
-            $model->password = $payloadObj->password;
-            $model->email = $payloadObj->email;
-        }
+        $model = new SignupForm();
 
-
-        if ($model->load($payloadObj)) {
-
+        if($this->compareKey($signUpForm['key']) and $model->load($payload)){
             if ($user = $model->signup()){
                 $manager = Yii::$app->authManager;
-                $role = Yii::$app->request->headers['role'];
+                $role = $signUpForm['role'];
 
                 if($role == 'seller' or $role == 'courier' or $role == 'buyer'){
                     $lRole = $manager->getRole($role);
                     if($lRole)
                         $manager->assign($lRole,$user->getId());
                 }
-                $modelArr = $model->toArray(['username', 'password', 'email']);
-                $modelArr['role'] =$lRole ? $lRole->name : null;
+
+                //output data
+                $modelArr = $model->toArray(['username', 'email']);
+                $modelArr['role'] = $lRole ? $lRole->name : null;
 
                 $response->data = $modelArr;
             } else

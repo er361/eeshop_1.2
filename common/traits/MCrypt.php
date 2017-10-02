@@ -33,7 +33,7 @@ trait MCrypt
         return $output;
     }
 
-    function compareKey($hash)
+    function  compareKey($hash)
     {
         return (md5($this->md5_key) == $hash);
     }
