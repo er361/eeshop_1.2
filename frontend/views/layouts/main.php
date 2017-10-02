@@ -37,7 +37,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Prodavec', 'url' => ['/prodavec/default/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
+        ['label' => 'Test data', 'url' => ['/site/test-data']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {

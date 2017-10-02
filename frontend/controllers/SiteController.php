@@ -2,7 +2,9 @@
 namespace frontend\controllers;
 
 use backend\models\Token;
+use common\models\User;
 use common\traits\MCrypt;
+use common\traits\MJsonHelper;
 use Yii;
 use yii\base\InvalidParamException;
 use Yii\helpers\BaseArrayHelper;
@@ -15,13 +17,14 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\helpers\Html;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    use  MCrypt;
+    use MJsonHelper;
     public $enableCsrfValidation = false;
     /**
      * @inheritdoc
@@ -29,6 +32,16 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+              'class' => AccessControl::className(),
+              'only' => ['test-data'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['sf']
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -128,9 +141,9 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
+    public function actionTestData()
     {
-        $str = [
+        $regStr = [
             "SignupForm" => [
                 "username" => "apiTest",
                 "password" => "rainboxe361",
@@ -139,9 +152,28 @@ class SiteController extends Controller
                 "role" => "seller"
             ]
         ];
+        $user = User::findByUsername('apiTest');
+        $token = Token::findOne(['id' => $user->access_token]);
 
-        $json = json_encode($str);
-        echo  $this->crypt($json,'e');
+        $authStr = [
+          'username' => 'apiTest',
+          'password' => 'rainboxe361',
+        ];
+
+        $regJson = json_encode($regStr);
+
+        $authJson = json_encode($authStr);
+
+        echo "reg";
+        echo Html::textarea('regData',$this->crypt($regJson,'e'),['rows' => 5,'cols' => 100]);
+
+        echo '<br/>';
+        echo  'auth';
+        echo Html::textarea('regData',$this->crypt($authJson,'e'),['rows' => 5,'cols' => 100]);
+
+        echo '<br/>';
+        echo  'token';
+        echo Html::textarea('token',$this->crypt($token->access_token,'e'),['rows' => 5,'cols' => 100]);
     }
 
     /**
@@ -155,10 +187,8 @@ class SiteController extends Controller
         $response->format = yii\web\Response::FORMAT_JSON;
 
         //raw json data parse
-        $rawBody = Yii::$app->request->rawBody;
-        $bodyObj = json_decode($rawBody);
+        $payload = $this->getPayload(Yii::$app->request->rawBody);
 
-        $payload = json_decode($this->crypt($bodyObj->payload, 'd'), true);
         $signUpForm = BaseArrayHelper::getValue($payload,'SignupForm');
 
         $model = new SignupForm();

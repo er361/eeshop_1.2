@@ -26,7 +26,7 @@ class RbacController extends Controller {
         $auth = Yii::$app->authManager;
 
         if($auth->getRole($role))
-            $auth->assign($role, User::findByUsername($username)->getId());
+            $auth->assign($auth->getRole($role), User::findByUsername($username)->getId());
     }
 
     function actionAddRole($role)

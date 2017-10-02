@@ -7,6 +7,7 @@ namespace backend\controllers;
 use backend\models\Token;
 use backend\traits\TokenTrait;
 use common\models\User;
+use common\traits\MJsonHelper;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\web\Controller;
@@ -22,6 +23,8 @@ use yii\web\UnauthorizedHttpException;
  */
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
+    use MJsonHelper;
     /**
      * @inheritdoc
      */
@@ -47,6 +50,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'auth' => ['post']
                 ],
             ],
         ];
@@ -54,12 +58,13 @@ class SiteController extends Controller
 
     public function actionAuth()
     {
-        $request = Yii::$app->request;
         $response = Yii::$app->response;
         $response->format = Response::FORMAT_JSON;
 
-        $authPassword = $request->authPassword;
-        $authUser = $request->authUser;
+        $payload = $this->getPayload(Yii::$app->request->rawBody,false);
+
+        $authPassword = $payload->password;
+        $authUser = $payload->username;
 
         $user = User::findByUsername($authUser);
         if($user && $user->validatePassword($authPassword)){

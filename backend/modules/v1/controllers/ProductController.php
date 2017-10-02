@@ -10,18 +10,20 @@ namespace backend\modules\v1\controllers;
 
 
 use common\models\User;
-use yii\filters\auth\HttpBasicAuth;
+use backend\components\JsonAuth;
 use yii\rest\ActiveController;
+
 
 class ProductController extends ActiveController
 {
     public $modelClass = 'common\models\Product';
+    public $enableCsrfValidation = false;
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::className()
+            'class' => JsonAuth::className()
         ];
         return $behaviors;
     }
