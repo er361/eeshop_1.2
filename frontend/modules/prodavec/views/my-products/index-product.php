@@ -14,14 +14,19 @@ use yii\widgets\Pjax;
 <div style="width: 800px;overflow-x: auto">
 
     <? Pjax::begin([
-            'clientOptions' => [
-                'container' => '#product-grid'
-            ]
+        'clientOptions' => [
+            'container' => '#product-grid'
+        ]
     ])?>
-        <?= $this->render('index-search', ['model' => $searchModel]) ?>
+        <?= $this->render('index-search', ['model' => $searchModel])?>
     <? Pjax::end()?>
 
-    <? Pjax::begin()?>
+    <? Pjax::begin([
+        'clientOptions' => [
+            'container' => '#product-grid'
+        ],
+        'formSelector' => false
+    ])?>
         <div id="product-grid">
             <?= $this->render('_product-grid',[
                 'dataProvider' => $dataProvider,

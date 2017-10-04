@@ -56,6 +56,16 @@ class MyProductsController extends Controller
             return $this->redirect(['products',
                 'id' => ArrayHelper::getValue(Yii::$app->request->queryParams,'ProductSearch.subcategory_id')
             ]);
+    }
 
+    public function actionVitrinaStatus($id)
+    {
+        $request = Yii::$app->request;
+        if($request->isPjax){
+            $model = Product::findOne($id);
+            $model->setAttributes(ArrayHelper::getValue($request->post(),'Product'));
+            $model->save();
+            return $this->renderPartial('_vitrina_status_form',['model' => $model]);
+        }
     }
 }

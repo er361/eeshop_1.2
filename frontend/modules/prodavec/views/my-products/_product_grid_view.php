@@ -15,9 +15,9 @@ use yii\helpers\Html;
     <div class="col-md-7">
         <ul>
             <li><?=Html::a($model->title,'#')?></li>
-            <li><?= $model->vendor_code?></li>
-            <li><?= $model->color?></li>
-            <li><?= $model->size?></li>
+            <li><b>Артикул:  </b><?= $model->vendor_code?></li>
+            <li><b>Цвет:  </b><?= $model->color?></li>
+            <li><b>Размер:  </b><?= $model->size?></li>
         </ul>
     </div>
 </div>

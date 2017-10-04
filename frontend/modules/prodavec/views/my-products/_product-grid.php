@@ -6,8 +6,11 @@
  * Time: 17:31
  */
 
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\web\View;
 use yii\widgets\Pjax;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 echo GridView::widget([
@@ -31,7 +34,31 @@ echo GridView::widget([
         'price',
         'price_on_website',
         'amount',
-        'vitrina_status'
+        [
+            'class' => yii\grid\ActionColumn::className(),
+            'template' => '{update}',
+            'controller' => 'my-products',
+            'buttons' => [
+              'update' => function($url,$model){
+                    return $this->render('_vitrina_status_form',
+                    ['model' => $model]);
+              }
+            ],
+            'content' => function($model)
+            {
+                return $model->vitrina_status;
+            }
+        ]
     ]
-])?>
+]);
+?>
+<?
+$this->registerJs("
+   $('body').on('change','.vitrina-status',function(event){
+        $(event.target).closest('form').submit();
+    })",View::POS_READY);
+?>
+
+
+
 
