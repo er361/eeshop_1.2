@@ -52,12 +52,7 @@ echo GridView::widget([
     ]
 ]);
 ?>
-<?
-$this->registerJs("
-   $('body').on('change','.vitrina-status',function(event){
-        $(event.target).closest('form').submit();
-    })",View::POS_READY);
-?>
+
 
 
 

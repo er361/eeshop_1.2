@@ -29,7 +29,7 @@ class MyProductsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(\Yii::$app->request->isPjax)
-            return $this->renderAjax('index-product',['dataProvider' => $dataProvider,
+            return $this->renderPartial('index-product',['dataProvider' => $dataProvider,
                 'searchModel' => $searchModel]);
 
         return $this->render('index-product',['dataProvider' => $dataProvider,
@@ -48,7 +48,7 @@ class MyProductsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(Yii::$app->request->isPjax)
-            return $this->renderAjax('_product-grid',[
+            return $this->renderPartial('_product-grid',[
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider
             ]);

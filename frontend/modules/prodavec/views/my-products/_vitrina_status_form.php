@@ -15,6 +15,7 @@ use yii\widgets\Pjax;
 
 <? Pjax::begin([
         'id' => 'pjax'.$model->id,
+        'enablePushState' => false,
         'clientOptions' => [
             'push' => false,
         ],

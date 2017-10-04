@@ -8,12 +8,14 @@
  */
 
 use yii\grid\GridView;
+use yii\web\View;
 use yii\widgets\Pjax;
 
 ?>
 <div style="width: 800px;overflow-x: auto">
 
     <? Pjax::begin([
+            'id' => 'search_pjax',
         'clientOptions' => [
             'container' => '#product-grid'
         ]
@@ -22,9 +24,10 @@ use yii\widgets\Pjax;
     <? Pjax::end()?>
 
     <? Pjax::begin([
-        'clientOptions' => [
-            'container' => '#product-grid'
-        ],
+            'id' => 'product_grid_pjax',
+//        'clientOptions' => [
+//            'container' => '#product-grid'
+//        ],
         'formSelector' => false
     ])?>
         <div id="product-grid">
@@ -35,6 +38,12 @@ use yii\widgets\Pjax;
         </div>
     <? Pjax::end()?>
 </div>
+<?
+$this->registerJs("
+   $('body').on('change','.vitrina-status',function(event){
+        $(event.target).closest('form').submit();
+    })",View::POS_READY);
+?>
 
 
 
