@@ -10,6 +10,7 @@
 use yii\grid\GridView;
 use yii\web\View;
 use yii\widgets\Pjax;
+use yii\helpers\Html;
 
 ?>
 <div style="width: 800px;overflow-x: auto">
@@ -22,6 +23,14 @@ use yii\widgets\Pjax;
     ])?>
         <?= $this->render('index-search', ['model' => $searchModel])?>
     <? Pjax::end()?>
+
+        <? Pjax::begin([
+                'enablePushState' => false,
+        ])?>
+
+            <?= Html::a('Выгрузить в excel','product-excel',['class' => 'btn btn-primary pull-right'])?>
+
+        <? Pjax::end()?>
 
     <? Pjax::begin([
             'id' => 'product_grid_pjax',

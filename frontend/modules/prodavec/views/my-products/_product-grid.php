@@ -21,7 +21,7 @@ echo GridView::widget([
             'label' => '№',
             'format' => 'html',
             'value' => function($model,$key,$index){
-                    return  '<b>'.$index.'</b>';
+                    return  '<b>'.($index+1).'</b>';
             }
         ],
         [

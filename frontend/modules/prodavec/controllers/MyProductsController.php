@@ -68,4 +68,18 @@ class MyProductsController extends Controller
             return $this->renderPartial('_vitrina_status_form',['model' => $model]);
         }
     }
+
+    public function actionProductExcel()
+    {
+        $file = \Yii::createObject([
+            'class' => 'codemix\excelexport\ExcelFile',
+            'sheets' => [
+                'Product' => [
+                    'class' => 'codemix\excelexport\ActiveExcelSheet',
+                    'query' => Product::find(),
+                ]
+            ]
+        ]);
+        $file->send('product.xlsx');
+    }
 }
