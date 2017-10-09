@@ -18,10 +18,10 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="product-search">
+
     <?php $form = ActiveForm::begin([
             'id' => 'product_form',
-        'action' => ['product-grid'],
+        'action' => 'product-grid',
         'method' => 'get',
         'options' => ['data' =>
             ['pjax' => true]
@@ -60,29 +60,14 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model,'priceFrom')?>
         </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <?=Html::hiddenInput('ProductSearch[subcategory_id]',$subcategory_id)?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::submitButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
+</div>
 
     <?php ActiveForm::end(); ?>
-</div>
+
 

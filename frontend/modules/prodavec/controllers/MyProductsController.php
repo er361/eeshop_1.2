@@ -9,11 +9,13 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\data\Pagination;
 
 use common\models\Product;
 
 class MyProductsController extends Controller
 {
+    protected $searchModel;
     public function actionIndex()
     {
         if(\Yii::$app->request->isPjax)
@@ -22,18 +24,28 @@ class MyProductsController extends Controller
         return $this->render('index');
     }
 
+    protected function getSearchModel()
+    {
+        if($this->searchModel)
+            return $this->searchModel;
+        else
+            return $this->searchModel = new ProductSearch();
+    }
 
     public function actionProducts()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = $this->getSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $subcategory_id = Yii::$app->request->queryParams['id'];
 
         if(\Yii::$app->request->isPjax)
             return $this->renderPartial('index-product',['dataProvider' => $dataProvider,
-                'searchModel' => $searchModel]);
+                'searchModel' => $searchModel,
+                'subcategory_id' => $subcategory_id]);
 
         return $this->render('index-product',['dataProvider' => $dataProvider,
-            'searchModel' => $searchModel]);
+            'searchModel' => $searchModel,
+            'subcategory_id' => $subcategory_id]);
     }
 
     public function actionSubCat($category_id)
@@ -44,10 +56,10 @@ class MyProductsController extends Controller
 
     public function actionProductGrid()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = $this->getSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if(Yii::$app->request->isPjax)
+        if(Yii::$app->request->isPjax or Yii::$app->request->queryParams['_pjax'])
             return $this->renderPartial('_product-grid',[
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider

@@ -7,37 +7,30 @@
  * @var $this yii\web\View
  */
 
+use nterms\pagesize\PageSize;
 use yii\grid\GridView;
 use yii\web\View;
+use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 
 ?>
 <div style="width: 800px;overflow-x: auto">
-
-    <? Pjax::begin([
-            'id' => 'search_pjax',
-        'clientOptions' => [
-            'container' => '#product-grid'
-        ]
-    ])?>
-        <?= $this->render('index-search', ['model' => $searchModel])?>
+    <!--SEARCH-->
+    <? Pjax::begin(['id' => 'strangeId','clientOptions' => ['container' => '#product-grid'],
+        'enablePushState' => false])?>
+        <?= $this->render('index-search', ['model' => $searchModel,'subcategory_id' => $subcategory_id])?>
     <? Pjax::end()?>
 
-        <? Pjax::begin([
-                'enablePushState' => false,
-        ])?>
-
+    <!--EXCEL-->
+        <? Pjax::begin(['enablePushState' => false])?>
             <?= Html::a('Выгрузить в excel','product-excel',['class' => 'btn btn-primary pull-right'])?>
-
         <? Pjax::end()?>
 
-    <? Pjax::begin([
-            'id' => 'product_grid_pjax',
-//        'clientOptions' => [
-//            'container' => '#product-grid'
-//        ],
-        'formSelector' => false
+    <!--RENDER !!!! THIS IS RENDER NOT GRID-->
+    <? Pjax::begin(['id' => 'product_grid_pjax', 'formSelector' => false,
+        'enablePushState' => true,
+        'enableReplaceState' => false
     ])?>
         <div id="product-grid">
             <?= $this->render('_product-grid',[
@@ -48,8 +41,8 @@ use yii\helpers\Html;
     <? Pjax::end()?>
 </div>
 <?
-$this->registerJs("
-   $('body').on('change','.vitrina-status',function(event){
+$this->registerJs(
+    "$('body').on('change','.vitrina-status',function(event){
         $(event.target).closest('form').submit();
     })",View::POS_READY);
 ?>

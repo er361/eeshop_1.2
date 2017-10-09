@@ -6,6 +6,8 @@
  * Time: 17:31
  */
 
+
+use frontend\widgets\ajaxLP\AjaxLinkPager;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\web\View;
@@ -16,12 +18,15 @@ use yii\helpers\Html;
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
+    'pager' => [
+        'class' => AjaxLinkPager::className()
+    ],
     'columns' => [
         [
             'label' => '№',
             'format' => 'html',
             'value' => function($model,$key,$index){
-                    return  '<b>'.($index+1).'</b>';
+                    return  '<b>'.($index + 1).'</b>';
             }
         ],
         [

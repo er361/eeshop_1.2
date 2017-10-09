@@ -51,13 +51,16 @@ class ProductSearch extends Product
         $formSubCat = yii\helpers\ArrayHelper::getValue($params, 'ProductSearch.subcategory_id');
         $subcategory_id = $formSubCat ? $formSubCat : $params['id'];
 
+        $pageSize = isset($params['per-page']) ? $params['per-page'] : 5;
+
         $query = Product::find()->where([
             'subcategory_id' => $subcategory_id,
             'prodavec_id' => Yii::$app->user->id
         ]);
 
         $dataProvider = new ActiveDataProvider([
-           'query' => $query
+           'query' => $query,
+            'pagination' => ['pageSize' => $pageSize]
         ]);
 
         // load the search form data and validate
@@ -76,7 +79,6 @@ class ProductSearch extends Product
             //заебашил как боженька
             ->andFilterWhere(['>=','price',$this->priceFrom])
             ->andFilterWhere(['<=','price',$this->priceTo]);
-
 
         return $dataProvider;
     }
