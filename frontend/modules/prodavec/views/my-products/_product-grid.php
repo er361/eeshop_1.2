@@ -8,6 +8,7 @@
 
 
 use frontend\widgets\ajaxLP\AjaxLinkPager;
+
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\web\View;
@@ -19,7 +20,8 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'pager' => [
-        'class' => AjaxLinkPager::className()
+      'class' => AjaxLinkPager::className(),
+        'minPageSize' => 5
     ],
     'columns' => [
         [

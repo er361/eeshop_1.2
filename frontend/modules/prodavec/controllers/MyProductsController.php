@@ -59,12 +59,13 @@ class MyProductsController extends Controller
         $searchModel = $this->getSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if(Yii::$app->request->isPjax or Yii::$app->request->queryParams['_pjax'])
-            return $this->renderPartial('_product-grid',[
+        if(Yii::$app->request->isPjax or Yii::$app->request->queryParams['_pjax']){
+            echo 'pjax';
+            return $this->renderAjax('_product-grid',[
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider
             ]);
-
+        }
             return $this->redirect(['products',
                 'id' => ArrayHelper::getValue(Yii::$app->request->queryParams,'ProductSearch.subcategory_id')
             ]);
