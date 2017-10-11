@@ -20,6 +20,7 @@ trait MCrypt
         // you may change these values to your own
         $output = false;
         $encrypt_method = "AES-256-CBC";
+
         $key = hash( 'sha256', $this->secret_key );
         $iv = substr( hash( 'sha256', $this->secret_iv ), 0, 16 );
 

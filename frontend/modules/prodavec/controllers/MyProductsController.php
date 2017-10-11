@@ -16,6 +16,20 @@ use common\models\Product;
 class MyProductsController extends Controller
 {
     protected $searchModel;
+    protected $subcategory_id;
+
+    public function behaviors()
+    {
+        return [
+          'verbs' => [
+              'class' => \yii\filters\VerbFilter::className(),
+              'actions' => [
+                  'delete' => ['post']
+              ]
+          ]
+        ];
+    }
+
     public function actionIndex()
     {
         if(\Yii::$app->request->isPjax)
@@ -36,7 +50,10 @@ class MyProductsController extends Controller
     {
         $searchModel = $this->getSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         $subcategory_id = Yii::$app->request->queryParams['id'];
+
+        $this->setSubcategoryId($subcategory_id);
 
         if(\Yii::$app->request->isPjax)
             return $this->renderPartial('index-product',['dataProvider' => $dataProvider,
@@ -46,6 +63,14 @@ class MyProductsController extends Controller
         return $this->render('index-product',['dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'subcategory_id' => $subcategory_id]);
+    }
+
+    /**
+     * @param mixed $subcategory_id
+     */
+    public function setSubcategoryId($subcategory_id)
+    {
+        $this->subcategory_id = isset($subcategory_id) ? $subcategory_id : null;
     }
 
     public function actionSubCat($category_id)
@@ -60,7 +85,6 @@ class MyProductsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(Yii::$app->request->isPjax or Yii::$app->request->queryParams['_pjax']){
-            echo 'pjax';
             return $this->renderAjax('_product-grid',[
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider
@@ -95,4 +119,33 @@ class MyProductsController extends Controller
         ]);
         $file->send('product.xlsx');
     }
+
+    public function actionDelete()
+    {
+        $keys = Yii::$app->request->bodyParams['keys'];
+        if(Yii::$app->request->isPost and (count($keys) > 0)){
+            foreach ($keys as $key) {
+                $row = Product::find()->where(['id' => $key])->one();
+                $row->delete();
+            }
+        }
+        $this->redirect(['products','id' => Yii::$app->request->bodyParams['subcategory_id']]);
+    }
+
+    public function actionView($id)
+    {
+        $model = $this->loadModel($id);
+
+        if(Yii::$app->request->isPjax)
+            return $this->renderPartial('detail/index',['model' => $model]);
+
+        return $this->render('detail/index',['model' => $model]);
+    }
+
+    public function loadModel($id)
+    {
+        $model = Product::findOne($id);
+        return $model;
+    }
+
 }

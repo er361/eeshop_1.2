@@ -13,12 +13,14 @@ use yii\widgets\Pjax;
 
 ?>
 <div id="account">
+    <?if(isset($userProfile)) :?>
     <img  height="150"
-         src=<?= Url::to('@web/uploads/' . $userProfile->photo_path )?>
+         src=<?= Url::to('@web/uploads/' . $userProfile->photo_path);?>
     >
     <p>
         <?= $userProfile->first_name . ' ' . $userProfile->second_name;?>
         <br>
         ID: <?= $userProfile->id; ?>
     </p>
+    <?endif;?>
 </div>

@@ -30,7 +30,11 @@ use yii\helpers\Html;
     <!--RENDER !!!! THIS IS RENDER NOT GRID-->
     <? Pjax::begin(['id' => 'product_grid_pjax', 'formSelector' => false,
         'enablePushState' => true,
-        'enableReplaceState' => false
+        'enableReplaceState' => false,
+        'clientOptions' => [
+                'container' => '#product-grid',
+            'timeout' => 5000
+        ]
     ])?>
         <div id="product-grid">
             <?= $this->render('_product-grid',[
