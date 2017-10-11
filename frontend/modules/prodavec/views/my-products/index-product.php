@@ -37,12 +37,9 @@ use yii\helpers\Html;
         ]
     ])?>
         <div id="product-grid">
-            <? var_dump($searchModel);
-            die('test');
-            ?>
             <?= $this->render('_product-grid',[
                 'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
+                'searchModel' => $searchModel,
             ]);?>
         </div>
     <? Pjax::end()?>
