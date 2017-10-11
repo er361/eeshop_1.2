@@ -36,7 +36,7 @@ use yii\widgets\ListView;
 
     echo ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView' => 'index-subcat',
+        'itemView' => '_sub_cat_item_view',
         'viewParams' => ['category_id' => $model->id]
     ]);
 

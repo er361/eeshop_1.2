@@ -38,15 +38,14 @@ AppAsset::register($this);
                 <div class="col-md-2">
                     <ul>
                         <? Pjax::begin([
+                                'id' => 'main_pjax',
                                 'clientOptions' => [
-                                        'container' => '#pjax-container',
-                                    'timeout' => 5000
+                                        'container' => '#pjax-container'
                                 ]
                         ])?>
                             <li><a class="pjax" href="<?= Url::to(['personal-info/index'])?>">Личные данные</a></li>
                             <li><a class="pjax" href="<?= Url::to(['my-products/index'])?>">Мои товары</a></li>
                         <? Pjax::end()?>
-
                     </ul>
                 </div>
 

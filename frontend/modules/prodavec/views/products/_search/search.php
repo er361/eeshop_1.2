@@ -51,7 +51,13 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model,'category')
                 ->dropDownList(BaseArrayHelper::map(Category::find()->all(),'id','name'),
                     ['prompt' => 'Выберите категорию'])?>
-            <?= $this->render('_subCatDropDown')?>
+
+<!--            RENDER SUBCAT-->
+            <div id="subcat-ajax">
+                <?= $this->render('_subCatDropDown')?>
+            </div>
+<!--            END-->
+
         </div>
         <div class="col-md-4">
             <?= $form->field($model,'priceTo')?>
@@ -69,5 +75,3 @@ use yii\widgets\ActiveForm;
 </div>
 
     <?php ActiveForm::end(); ?>
-
-

@@ -10,7 +10,7 @@ use frontend\modules\prodavec\models\Subcategory;
 use yii\helpers\BaseHtml;
 use yii\helpers\BaseArrayHelper;
 ?>
-<div id="subcat-ajax">
+
     <? if(isset($subCats)):?>
         <?= BaseHtml::label('Subcategory','productsearch-subcategory')?>
         <?= BaseHtml::dropDownList('ProductSearch[subcategory_id]',[],
@@ -21,11 +21,8 @@ use yii\helpers\BaseArrayHelper;
             ])?>
         <div class="help-block"></div>
     <?endif;?>
-</div>
 
-<? $this->registerJsFile('@web/js/categoryPjax.js',[
-    'depends' => yii\web\JqueryAsset::className()
-])?>
+
 
 
 

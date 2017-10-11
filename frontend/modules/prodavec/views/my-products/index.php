@@ -12,23 +12,13 @@ $dataProvider = new ActiveDataProvider([
         'pageSize' => 20,
     ],
 ]);
-    Pjax::begin([
-            'clientOptions' => [
-            ]
-    ]);
-        echo ListView::widget([
+?>
+<div id="product-main-container">
+    <?echo ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' => '_category',
-        ]);
-    Pjax::end();
-?>
-<script>
-    function hideModal(id){
-        $('#modal_' + id).modal('hide');
-        $('.modal-backdrop.fade.in').hide();
-        $('body.modal-open').removeClass('modal-open');
-    }
-</script>
+        ]);?>
+</div>
 <?
 /* @var $this yii\web\View; */
 

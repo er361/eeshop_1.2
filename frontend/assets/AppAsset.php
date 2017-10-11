@@ -15,7 +15,9 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        'js/commonPjax.js'
+        'js/commonPjax.js',
+        'js/categoryPjax.js',
+        'js/commonProdavec.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

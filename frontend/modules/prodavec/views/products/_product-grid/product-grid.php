@@ -15,8 +15,9 @@ use yii\web\View;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 /* @var $this yii\web\View */
+?>
 
-echo GridView::widget([
+    <?echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'pager' => [
@@ -57,8 +58,8 @@ echo GridView::widget([
             }
         ]
     ]
-]);
-?>
+]); ?>
+
 
 
 

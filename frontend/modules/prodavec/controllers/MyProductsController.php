@@ -49,20 +49,28 @@ class MyProductsController extends Controller
     public function actionProducts()
     {
         $searchModel = $this->getSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
 
         $subcategory_id = Yii::$app->request->queryParams['id'];
 
         $this->setSubcategoryId($subcategory_id);
 
-        if(\Yii::$app->request->isPjax)
+        if(\Yii::$app->request->isPjax){
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
             return $this->renderPartial('index-product',['dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'subcategory_id' => $subcategory_id]);
+        }else{
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index-product',['dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'subcategory_id' => $subcategory_id]);
+            return $this->render('index-product',['dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+                'subcategory_id' => $subcategory_id]);
+        }
+
+
+
     }
 
     /**
