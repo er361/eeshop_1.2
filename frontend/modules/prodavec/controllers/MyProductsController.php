@@ -15,7 +15,7 @@ use common\models\Product;
 
 class MyProductsController extends Controller
 {
-    protected $searchModel;
+    protected $searchModel = null;
     protected $subcategory_id;
 
     public function behaviors()
