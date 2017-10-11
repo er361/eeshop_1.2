@@ -25,7 +25,7 @@ use yii\widgets\ListView;
     'header' => $model->name,
     'toggleButton' => ['label' => $model->name,'tag' => 'a','class' => 'btn']]);
 
-$query = Subcategory::find()->where(['category_id' => $model->id]);
+    $query = Subcategory::find()->where(['category_id' => $model->id]);
 
     $dataProvider = new ActiveDataProvider([
     'query' => $query,

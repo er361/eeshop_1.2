@@ -3,9 +3,9 @@
  */
 
 
-use frontend\assets\BowerAsset;
+use frontend\assets\BowerAssett;
 
-BowerAsset::register($this);
+BowerAssett::register($this);
 ?>
 <div class="prodavec-default-index">
     <h1><?= $this->context->action->uniqueId ?></h1>

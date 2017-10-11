@@ -10,6 +10,7 @@
 
 use frontend\assets\AppAsset;
 use frontend\modules\prodavec\models\ProdavecPersonalInfo;
+use yii\web\View;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -65,3 +66,4 @@ AppAsset::register($this);
     </body>
     </html>
 <?php $this->endPage() ?>
+
