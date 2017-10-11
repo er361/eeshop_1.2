@@ -40,7 +40,9 @@ use yii\helpers\Html;
             <?= $this->render('_product-grid',[
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
-            ])?>
+            ]);
+            var_dump($searchModel);
+            ?>
         </div>
     <? Pjax::end()?>
 </div>
