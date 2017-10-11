@@ -11,7 +11,7 @@ use yii\helpers\BaseHtml;
 use yii\helpers\BaseArrayHelper;
 ?>
 <div id="subcat-ajax">
-    <? if($subCats):?>
+    <? if(isset($subCats)):?>
         <?= BaseHtml::label('Subcategory','productsearch-subcategory')?>
         <?= BaseHtml::dropDownList('ProductSearch[subcategory_id]',[],
             BaseArrayHelper::map($subCats,'id','name'),
