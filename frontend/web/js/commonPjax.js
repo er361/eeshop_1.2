@@ -1,6 +1,7 @@
 
 
 $(document).on('pjax:error',function (e,xhr, textStatus, error, options) {
+    // e.preventDefault();
     console.log(textStatus);
 });
 

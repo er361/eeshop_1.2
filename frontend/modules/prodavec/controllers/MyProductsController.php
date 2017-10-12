@@ -55,22 +55,21 @@ class MyProductsController extends Controller
 
         $this->setSubcategoryId($subcategory_id);
 
+        $this->setViewPath('@frontend/modules/prodavec/views/products');
+
         if(\Yii::$app->request->isPjax){
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            return $this->renderPartial('index-product',['dataProvider' => $dataProvider,
+            return $this->renderPartial('index',['dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'subcategory_id' => $subcategory_id]);
         }else{
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            return $this->render('index-product',['dataProvider' => $dataProvider,
+            return $this->render('index',['dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'subcategory_id' => $subcategory_id]);
         }
-
-
-
     }
 
     /**
@@ -83,8 +82,10 @@ class MyProductsController extends Controller
 
     public function actionSubCat($category_id)
     {
+        $this->setViewPath('@frontend/modules/prodavec/views/products');
+
         $subCats = Subcategory::find()->where(['category_id' => $category_id])->all();
-        return $this->renderAjax('_subCatDropDown',['subCats' => $subCats]);
+        return $this->renderAjax('_search/_subCatDropDown',['subCats' => $subCats]);
     }
 
     public function actionProductGrid()
@@ -92,20 +93,26 @@ class MyProductsController extends Controller
         $searchModel = $this->getSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if(Yii::$app->request->isPjax or Yii::$app->request->queryParams['_pjax']){
-            return $this->renderAjax('_product-grid',[
+        $this->setViewPath('@frontend/modules/prodavec/views/products/_product-grid');
+
+        if(Yii::$app->request->isPjax)
+        {
+            return $this->renderPartial('grid',[
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider
             ]);
         }
             return $this->redirect(['products',
-                'id' => ArrayHelper::getValue(Yii::$app->request->queryParams,'ProductSearch.subcategory_id')
+                'id' => ArrayHelper::getValue(Yii::$app->request->queryParams,'subcategory_id')
             ]);
     }
 
     public function actionVitrinaStatus($id)
     {
         $request = Yii::$app->request;
+
+        $this->setViewPath('@frontend/modules/prodavec/views/products/_product-grid');
+
         if($request->isPjax){
             $model = Product::findOne($id);
             $model->setAttributes(ArrayHelper::getValue($request->post(),'Product'));

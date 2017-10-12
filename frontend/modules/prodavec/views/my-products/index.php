@@ -16,7 +16,7 @@ $dataProvider = new ActiveDataProvider([
 <div id="product-main-container">
     <?echo ListView::widget([
             'dataProvider' => $dataProvider,
-            'itemView' => '_category',
+            'itemView' => '_category/index-category',
         ]);?>
 </div>
 <?

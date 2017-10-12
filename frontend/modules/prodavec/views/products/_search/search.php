@@ -66,7 +66,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model,'priceFrom')?>
         </div>
     </div>
-            <?=Html::hiddenInput('ProductSearch[subcategory_id]',$subcategory_id)?>
+            <?=Html::hiddenInput('subcategory_id',$subcategory_id)?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

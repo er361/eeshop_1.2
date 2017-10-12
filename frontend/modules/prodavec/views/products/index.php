@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <!--SEARCH-->
         <? Pjax::begin(['id' => 'strangeId', 'clientOptions' => ['container' => '#product-grid'],
             'enablePushState' => false]) ?>
-        <?= $this->render('index-search', ['model' => $searchModel, 'subcategory_id' => $subcategory_id]) ?>
+        <?= $this->render('_search/search', ['model' => $searchModel, 'subcategory_id' => $subcategory_id]) ?>
         <? Pjax::end() ?>
 
         <!--EXCEL-->
@@ -28,22 +28,25 @@ use yii\helpers\Html;
         <? Pjax::end() ?>
 
         <!--RENDER !!!! THIS IS RENDER NOT GRID-->
-        <div id="product-grid">
-        <? Pjax::begin(['id' => 'product_grid_pjax', 'formSelector' => false,
+
+        <? Pjax::begin([
+                'id' => 'product_grid_pjax',
+            'formSelector' => '.underGrid',
             'enablePushState' => true,
             'enableReplaceState' => false,
             'clientOptions' => [
-                'container' => '#product-grid'
+                'container' => '#product-grid',
+                'fragment' => '#product_grid_widget'
             ]
-        ]) ?>
-
-            <?= $this->render('_product-grid', [
+        ])?>
+        <div id="product-grid">
+            <?= $this->render('_product-grid/grid', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
             ]); ?>
-
-        <? Pjax::end() ?>
         </div>
+        <? Pjax::end() ?>
+
 </div>
 <?
 $this->registerJs(

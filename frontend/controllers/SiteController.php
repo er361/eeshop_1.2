@@ -161,20 +161,20 @@ class SiteController extends Controller
           'password' => 'rainboxe361',
         ];
 
-        $regJson = json_encode($regStr);
+        $regJson = json_encode('qwerty');
 
         $authJson = json_encode($authStr);
 
-        echo "reg";
+        echo "qwerty";
         echo Html::textarea('regData',$this->crypt($regJson,'e'),['rows' => 5,'cols' => 100]);
 
-        echo '<br/>';
-        echo  'auth';
-        echo Html::textarea('regData',$this->crypt($authJson,'e'),['rows' => 5,'cols' => 100]);
-
-        echo '<br/>';
-        echo  'token';
-        echo Html::textarea('token',$this->crypt($token,'e'),['rows' => 5,'cols' => 100]);
+//        echo '<br/>';
+//        echo  'auth';
+//        echo Html::textarea('regData',$this->crypt($authJson,'e'),['rows' => 5,'cols' => 100]);
+//
+//        echo '<br/>';
+//        echo  'token';
+//        echo Html::textarea('token',$this->crypt($token,'e'),['rows' => 5,'cols' => 100]);
     }
 
     /**

@@ -18,11 +18,11 @@ use yii\helpers\Html;
 ?>
 
     <?echo GridView::widget([
+        'id' => 'product_grid_widget',
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'pager' => [
-      'class' => AjaxLinkPager::className(),
-        'minPageSize' => 5
+        'class' => AjaxLinkPager::className(),
     ],
     'columns' => [
         [
