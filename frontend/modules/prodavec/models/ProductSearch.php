@@ -49,7 +49,7 @@ class ProductSearch extends Product
     public function search($params)
     {
         $formSubCat = yii\helpers\ArrayHelper::getValue($params, 'ProductSearch.subcategory_id');
-        $subcategory_id = $formSubCat ? $formSubCat : $params['id'];
+        $subcategory_id = $formSubCat ? $formSubCat : $params['subcategory_id'];
 
         $pageSize = isset($params['per-page']) ? $params['per-page'] : 5;
 

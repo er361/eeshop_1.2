@@ -21,6 +21,7 @@ class PageSize extends Widget
     public $action = '#';
     public $id = null;
     public $pagination;
+    public $costil = false;
 
     public function init()
     {
@@ -34,13 +35,17 @@ class PageSize extends Widget
         //но выглядит сука как костыль
         $js ="$('body').on('change','#' + '$this->id',function(event) {
                 $(event.target).closest('form').submit();
-            })";
+            })
+            ";
 
         $this->getView()->registerJs($js);
     }
 
     public function run()
     {
+        if($this->pagination->getPageCount() < 2)
+            return '';
+
         return $this->render('index',[
             'widget' => $this,
             'pagination' => $this->pagination

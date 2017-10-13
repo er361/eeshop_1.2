@@ -13,7 +13,7 @@ use yii\helpers\Url;
 <div class="item_view">
     <a class="pjax"
        onclick="hideModal()"
-       href="<?= Url::to(['/prodavec/my-products/products','id' => $model->id])?>">
+       href="<?= Url::to(['/prodavec/my-products/products','subcategory_id' => $model->id])?>">
         <?= Html::encode($model->name)?>
     </a>
 </div>

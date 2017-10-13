@@ -14,19 +14,24 @@ use yii\web\View;
  */
 ?>
 
-<div class="form-group" style="width: 60px;margin-top: 20px">
+<div class="form-group" style="width: 280px;margin-top: 20px">
     <?= Html::beginForm($widget->action,'get',['data' => ['pjax' => true],
         'class' => 'underGrid'])?>
         <?=Html::dropDownList('per-page','',$widget->pageSizeArray,[
+                'prompt' => 'Количество записай на странице',
                 'id' => $widget->id,
         'class' => 'form-control'
         ])?>
-    <?=Html::hiddenInput('page',$pagination->getPage() + 1)?>
+
+    <?= Html::hiddenInput('page',$pagination->getPage() + 1)?>
+
+<!--    Костыль-->
+    <?if($widget->costil):?>
+        <?= Html::hiddenInput('subcategory_id',$widget->costil); ?>
+    <?endif?>
+<!--    end-->
 
     <?= Html::endForm()?>
 </div>
-<?
 
-?>
-<?$this->registerJs($js);
 

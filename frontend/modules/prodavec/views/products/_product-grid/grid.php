@@ -23,6 +23,7 @@ use yii\helpers\Html;
     'filterModel' => $searchModel,
     'pager' => [
         'class' => AjaxLinkPager::className(),
+        'costil' => $subcategory_id
     ],
     'columns' => [
         [

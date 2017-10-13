@@ -12,6 +12,8 @@ use yii\helpers\Html;
 
 class AjaxLinkPager extends \yii\widgets\LinkPager
 {
+    public $costil = false;
+
     public function init()
     {
         if ($this->pagination === null) {
@@ -30,12 +32,12 @@ class AjaxLinkPager extends \yii\widgets\LinkPager
 
         echo Html::beginTag('div',['class' => 'grid']);
 
-            echo Html::beginTag('div',['class' => 'col-md-8']);
+            echo Html::beginTag('div',['class' => 'col-md-6']);
                 echo $this->renderPageButtons();
             echo Html::endTag('div');
 
             echo Html::beginTag('div',['class' => 'col-md-4']);
-                echo PageSize::widget(['pagination' => $this->pagination]);
+                echo PageSize::widget(['pagination' => $this->pagination,'costil' => $this->costil]);
             echo Html::endTag('div');
 
         echo Html::endTag('div');

@@ -17,13 +17,17 @@ use yii\helpers\Html;
 ?>
 <div style="width: 800px;overflow-x: auto">
     <!--SEARCH-->
-        <? Pjax::begin(['id' => 'strangeId', 'clientOptions' => ['container' => '#product-grid'],
+        <? Pjax::begin(['id' => 'strangeId',
+            'clientOptions' => [
+                'container' => '#product-grid',
+                'fragment' => '#product_grid_widget'
+        ],
             'enablePushState' => false]) ?>
         <?= $this->render('_search/search', ['model' => $searchModel, 'subcategory_id' => $subcategory_id]) ?>
         <? Pjax::end() ?>
 
         <!--EXCEL-->
-        <? Pjax::begin(['enablePushState' => false]) ?>
+        <? Pjax::begin(['enablePushState' => false,'timeout' => 10000]) ?>
             <?= Html::a('Выгрузить в excel', 'product-excel', ['class' => 'btn btn-primary pull-right']) ?>
         <? Pjax::end() ?>
 
@@ -43,6 +47,7 @@ use yii\helpers\Html;
             <?= $this->render('_product-grid/grid', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
+                'subcategory_id' => $subcategory_id
             ]); ?>
         </div>
         <? Pjax::end() ?>
