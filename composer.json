@@ -21,8 +21,7 @@
         "yiisoft/yii2-authclient": "^2.1",
         "codemix/yii2-excelexport": "*",
         "nterms/yii2-pagesize-widget": "*",
-        "liyunfang/yii2-widget-linkpager": "^1.0",
-        "kartik-v/yii2-widget-select2": "@dev"
+        "liyunfang/yii2-widget-linkpager": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

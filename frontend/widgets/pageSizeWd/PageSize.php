@@ -22,6 +22,7 @@ class PageSize extends Widget
     public $id = null;
     public $pagination;
     public $costil = false;
+    public $hideOnSinglePage = true;
 
     public function init()
     {
@@ -43,7 +44,7 @@ class PageSize extends Widget
 
     public function run()
     {
-        if($this->pagination->getPageCount() < 2)
+        if($this->pagination->getPageCount() < 2 and ($this->hideOnSinglePage = false) )
             return '';
 
         return $this->render('index',[

@@ -37,7 +37,11 @@ class AjaxLinkPager extends \yii\widgets\LinkPager
             echo Html::endTag('div');
 
             echo Html::beginTag('div',['class' => 'col-md-4']);
-                echo PageSize::widget(['pagination' => $this->pagination,'costil' => $this->costil]);
+                echo PageSize::widget([
+                    'pagination' => $this->pagination,
+                    'costil' => $this->costil,
+                    'hideOnSinglePage' => $this->hideOnSinglePage
+                ]);
             echo Html::endTag('div');
 
         echo Html::endTag('div');
