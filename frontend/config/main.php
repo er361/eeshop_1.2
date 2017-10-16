@@ -9,12 +9,17 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
+    'homeUrl' => '/',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'aliases' =>[
+        '@seller_m' => '@frontend/modules/seller',
+        '@seller_v' => '@frontend/modules/seller/views'
+    ],
     'modules' => [
-        'prodavec' => [
-            'class' => 'frontend\modules\prodavec\Module'
-        ]
+        'seller' => [
+            'class' => 'frontend\modules\seller\Module',
+        ],
     ],
     'components' => [
         'request' => [

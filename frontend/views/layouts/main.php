@@ -36,7 +36,7 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Prodavec', 'url' => ['/prodavec/default/index']],
+        ['label' => 'Seller', 'url' => ['/seller/default/index']],
         ['label' => 'Test data', 'url' => ['/site/test-data']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];

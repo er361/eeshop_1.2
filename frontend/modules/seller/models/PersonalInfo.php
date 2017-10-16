@@ -1,8 +1,9 @@
 <?php
 
-namespace frontend\modules\prodavec\models;
+namespace frontend\modules\seller\models;
 
 use Yii;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "prodavec_personal_info".
@@ -18,7 +19,7 @@ use Yii;
  * @property integer $user_id
  * @property string $photo_path
  */
-class ProdavecPersonalInfo extends \yii\db\ActiveRecord
+class PersonalInfo extends \yii\db\ActiveRecord
 {
     public $photo_file;
     /**
@@ -36,9 +37,8 @@ class ProdavecPersonalInfo extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'integer'],
-            [['first_name','photo_path', 'second_name', 'company_name', 'brands', 'email', 'phone', 'address'], 'string', 'max' => 255],
-            ['email','email'],
-            ['photo_file','file','skipOnEmpty' => true]
+            [['first_name', 'second_name', 'company_name', 'brands', 'email', 'phone', 'address', 'photo_path'], 'string', 'max' => 255],
+            [['photo_file'],'file','skipOnEmpty' => true, 'mimeTypes' => 'image/*' ]
         ];
     }
 
@@ -57,28 +57,21 @@ class ProdavecPersonalInfo extends \yii\db\ActiveRecord
             'phone' => 'Phone',
             'address' => 'Address',
             'user_id' => 'User ID',
-            'photo_path' => 'Photo path'
+            'photo_path' => 'Photo Path',
         ];
     }
-
+    
     public function upload()
     {
         if ($this->validate()) {
+            //create dir if not exists
+            if(!file_exists('uploads'))
+                FileHelper::createDirectory('uploads');
 
-            if (!file_exists('uploads/')) {
-                mkdir('uploads/', 0777, true);
-            }
-            $this->setPhotoPath($this->photo_file->baseName);
-            $this->photo_file->saveAs('uploads/' . $this->photo_path. '.' . $this->photo_file->extension);
+            $this->photo_file->saveAs('uploads/' . $this->photo_file->baseName . '.' . $this->photo_file->extension);
             return true;
         } else {
             return false;
         }
     }
-
-    public function setPhotoPath($strign){
-        $what = md5($strign + rand());
-        $this->photo_path = $what;
-    }
-
 }
