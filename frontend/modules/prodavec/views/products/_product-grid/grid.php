@@ -28,6 +28,9 @@ use yii\helpers\Html;
     ],
     'columns' => [
         [
+            'class' => \yii\grid\CheckboxColumn::className()
+        ],
+        [
             'label' => '№',
             'format' => 'html',
             'value' => function($model,$key,$index){
@@ -62,8 +65,23 @@ use yii\helpers\Html;
     ]
 ]); ?>
 
-
-
+<? $this->registerJs( '$(\'body\').on(\'click\',\'input.select-on-check-all\',function(){
+        $(\'input[name = "selection[]"]\').each(function(i,el){
+            val = $(el).val();
+            if($(el).prop(\'checked\') == false)
+                $(el).prop(\'checked\',true);
+            else
+                $(el).prop(\'checked\',false);
+//                console.log($(el).prop(\'checked\'));
+        })
+    })')?>
+<script>
+//    $('body').on('click','input.select-on-check-all',function(){
+//        $('input[name = "selection[]"]').each(function(i,el){
+//            console.log(i);
+//        })
+//    })
+</script>
 
 
 

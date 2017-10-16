@@ -7,8 +7,10 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 ?>
+
 
 <div class="item_view">
     <a class="pjax"
@@ -17,4 +19,5 @@ use yii\helpers\Url;
         <?= Html::encode($model->name)?>
     </a>
 </div>
+
 

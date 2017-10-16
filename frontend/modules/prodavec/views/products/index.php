@@ -40,7 +40,7 @@ use yii\helpers\Html;
             'enableReplaceState' => false,
             'clientOptions' => [
                 'container' => '#product-grid',
-                'fragment' => '#product_grid_widget'
+                'fragment' => '#product-grid'
             ]
         ])?>
         <div id="product-grid">
