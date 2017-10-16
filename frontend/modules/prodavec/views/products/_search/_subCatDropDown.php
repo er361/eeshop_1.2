@@ -16,6 +16,7 @@ use yii\helpers\BaseArrayHelper;
         <?= BaseHtml::dropDownList('ProductSearch[subcategory_id]',[],
             BaseArrayHelper::map($subCats,'id','name'),
             [
+                    'id' => 'sub_cat_id',
                     'prompt' => 'Выберите под категорию',
                 'class' => 'form-control'
             ])?>

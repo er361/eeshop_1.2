@@ -76,11 +76,12 @@ use yii\helpers\Html;
         })
     })')?>
 <script>
-//    $('body').on('click','input.select-on-check-all',function(){
-//        $('input[name = "selection[]"]').each(function(i,el){
-//            console.log(i);
-//        })
-//    })
+    $('body').on('click','#deleteSelectedRows',function(e){
+        var keys = $('#product_grid_widget').yiiGridView('getSelectedRows');
+        id = $('#sub_cat_id').val();
+//        $('e.target').
+        $.post('delete',{keys:keys})
+    })
 </script>
 
 

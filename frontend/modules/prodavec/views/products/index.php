@@ -44,6 +44,11 @@ use yii\helpers\Html;
             ]
         ])?>
         <div id="product-grid">
+            <div id="deleteSelectedRows"
+                 class="btn btn-danger"
+                 data-value="<?=$subcategory_id?>">
+                Delete
+            </div>
             <?= $this->render('_product-grid/grid', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
