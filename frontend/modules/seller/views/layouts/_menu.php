@@ -11,6 +11,10 @@ echo \yii\bootstrap\Nav::widget([
             'label' => 'Личные данные',
             'url' => ['/seller/personal-info/update','id' => Yii::$app->user->id]
         ],
+        [
+            'label' => 'Мои товары',
+            'url' => ['/seller/my-products/index']
+        ]
     ],
     'options' => ['class' => 'nav-stacked']
 ]);

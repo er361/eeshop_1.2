@@ -11,6 +11,8 @@ $this->beginContent('@frontend/views/layouts/main.php');?>
 <div class="grid">
     <div class="col-md-2">
         <?echo $this->render('_menu');?>
+        <h1>CRUD</h1>
+        <?echo $this->render('_crud_menu')?>
     </div>
 
     <?if(isset($this->blocks['avatar_block'])):?>
