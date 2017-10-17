@@ -16,4 +16,9 @@ $this->title = 'Personal Info: ' . $model->first_name;
         'model' => $model,
     ]) ?>
 
+    <? $this->beginBlock('avatar_block');?>
+        <div class="col-md-2">
+            <?echo $this->render('@seller_v/layouts/_avatar_block',['model' => $model]);?>
+        </div>
+    <? $this->endBlock()?>
 </div>

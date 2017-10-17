@@ -68,10 +68,14 @@ class PersonalInfo extends \yii\db\ActiveRecord
             if(!file_exists('uploads'))
                 FileHelper::createDirectory('uploads');
 
-            $this->photo_file->saveAs('uploads/' . $this->photo_file->baseName . '.' . $this->photo_file->extension);
+            $this->photo_file->saveAs('uploads/' . md5($this->photo_file->baseName) . '.' . $this->photo_file->extension);
             return true;
         } else {
             return false;
         }
+    }
+    public function getFullName()
+    {
+        return $this->first_name . ' ' . $this->second_name;
     }
 }

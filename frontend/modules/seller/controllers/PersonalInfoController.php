@@ -40,9 +40,11 @@ class PersonalInfoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()){
+        if ($model->load(Yii::$app->request->post())){
             $model->photo_file = UploadedFile::getInstance($model, 'photo_file');
-            $model->upload();
+            $model->photo_path =  md5($model->photo_file->baseName) . '.' . $model->photo_file->extension;
+            if($model->save())
+                $model->upload();
         }
         return $this->render('update', [
             'model' => $model,

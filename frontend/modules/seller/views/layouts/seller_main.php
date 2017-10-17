@@ -9,11 +9,15 @@
 $this->beginContent('@frontend/views/layouts/main.php');?>
 
 <div class="grid">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?echo $this->render('_menu');?>
     </div>
 
-    <div class="col-md-9">
+    <?if(isset($this->blocks['avatar_block'])):?>
+        <?= $this->blocks['avatar_block']?>
+    <?endif;?>
+
+    <div class="col-md-8">
         <?= $content?>
     </div>
 </div>
